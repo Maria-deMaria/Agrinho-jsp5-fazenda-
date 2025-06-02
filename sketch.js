@@ -7,23 +7,14 @@ let startTime;
 
   function setup() {
   createCanvas(600, 400);
-  boi = new Boi();
+  boi = new boi();
   for (let i = 0; i < 20; i++) {
     milhos.push(new Milho());
   }
   startTime = millis();
 }
   function draw() {
-    
-    background(220);
-  
-  // mostrar emojis decorativos
-  textSize(40);
-  text("🐂", 10, height - 40);
-  text("🌾", 60, height - 40);
-  text("🧑‍🌾", 110, height - 40);
-  }
-    
+     
     if (focused==true){
    background("#9400D3");
       
@@ -31,10 +22,19 @@ let startTime;
     else {
    background("#0000FF");
            }
-  if(!gameOver) {
-    //tempo restante
+  
+  // mostrar emojis decorativos
+  textSize(40);
+  text("🐂", 10,  height - 40);
+  text("🌾", 60,  height - 40);
+  text("🧑‍🌾", 110, height - 40);
+  
+   
+           }
+  if(!gameOver) 
+    //tempo restante 
+   {  
     let elapsed =(millis()-startTime)/1000;
-    let elapsed =(millis() - startTime) / 1000;
     let remaining = max(0, tempo - int(elapsed));
     if (remaining <= 0) {
       gameOver = true;
@@ -62,7 +62,7 @@ let startTime;
     text("Fim de jogo! 🐂💤", width / 2, height / 2 - 20);
     text("Você ganhou " + score + " moedas! 🪙", width / 2, height / 2 + 20);
     }
- }
+
   
 function keyPressed(){
   if (keyCode === LEFT_ARROW) {
@@ -119,5 +119,6 @@ class Milho {
     text("🌽", this.x, this.y);
   }
 }
+  
   
   
