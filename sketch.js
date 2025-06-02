@@ -1,4 +1,4 @@
-let boi
+let boi;
 
 
 
