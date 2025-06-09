@@ -1,74 +1,73 @@
 let boi;
 let milhos = [];
 let score = 0;
-let tempo = 50; // tempo de jogo em segundos 
+let tempo = 30; // tempo de jogo em segundos 
 let gameOver = false;
 let startTime;
 
-  function setup() {
+function setup() {
   createCanvas(600, 400);
-  boi = new boi();
+  boi = new Boi();
   for (let i = 0; i < 20; i++) {
     milhos.push(new Milho());
   }
   startTime = millis();
 }
-  function draw() {
-     
-    if (focused==true){
-   background("#9400D3");
-      
-    }
-    else {
-   background("#0000FF");
-           }
-  
-  // mostrar emojis decorativos
+
+function draw() {
+  // cor de fundo baseada no foco
+  if (focused == true) {
+    background("#9400D3");
+  } else {
+    background("#0000FF");
+  }
+
+  // emojis decorativos
   textSize(40);
-  text("🐂", 10,  height - 40);
-  text("🌾", 60,  height - 40);
+  text("🐂", 10, height - 40);
+  text("🌾", 60, height - 40);
   text("🧑‍🌾", 110, height - 40);
-  
-   
-           }
-  if(!gameOver) 
-    //tempo restante 
-   {  
-    let elapsed =(millis()-startTime)/1000;
+
+  if (!gameOver) {
+    // tempo restante
+    let elapsed = (millis() - startTime) / 1000;
     let remaining = max(0, tempo - int(elapsed));
     if (remaining <= 0) {
       gameOver = true;
     }
-  //mostrar e move boi
+
+    // mostrar e mover boi
     boi.move();
     boi.show();
+
     // mostrar e verificar milho
-    for(let i= milhos.length -1; i >= 0; i--){
+    for (let i = milhos.length - 1; i >= 0; i--) {
       milhos[i].show();
       if (boi.eat(milhos[i])) {
         milhos.splice(i, 1);
         score++;
       }
     }
-  // mostrar a placa e tempo
+
+    // placar e tempo, pesquisei no chat gpt para me ajudar com o codigo 
     fill(0);
     textSize(20);
     text("🌽 Comidos: " + score + " 🪙", 10, 30);
     text("⏳ Tempo: " + remaining + "s", 10, 60);
-    } else {
+  } else {
     fill(0);
     textSize(30);
     textAlign(CENTER, CENTER);
     text("Fim de jogo! 🐂💤", width / 2, height / 2 - 20);
     text("Você ganhou " + score + " moedas! 🪙", width / 2, height / 2 + 20);
-    }
+  }
+}
 
-  
-function keyPressed(){
+function keyPressed() {
   if (keyCode === LEFT_ARROW) {
     boi.xdir = -1;
     boi.ydir = 0;
-  }else if (keyCode=== RIGHT_ARROW) {
+  } else if (keyCode === RIGHT_ARROW) {
     boi.xdir = 1;
     boi.ydir = 0;
   } else if (keyCode === UP_ARROW) {
@@ -79,7 +78,8 @@ function keyPressed(){
     boi.ydir = 1;
   }
 }
-  class Boi {
+
+class Boi {
   constructor() {
     this.x = width / 2;
     this.y = height / 2;
@@ -88,15 +88,16 @@ function keyPressed(){
     this.xdir = 0;
     this.ydir = 0;
   }
-     move() {
+
+  move() {
     this.x += this.xdir * this.speed;
     this.y += this.ydir * this.speed;
 
-    // Limites da tela
     this.x = constrain(this.x, 0, width - this.size);
     this.y = constrain(this.y, 0, height - this.size);
   }
-     show() {
+
+  show() {
     textSize(this.size);
     text("🐂", this.x, this.y);
   }
