@@ -4,6 +4,7 @@ let score = 0;
 let tempo = 30; // tempo de jogo em segundos 
 let gameOver = false;
 let startTime;
+let jogoComecou = false;
 
 function setup() {
   createCanvas(600, 400);
@@ -11,15 +12,23 @@ function setup() {
   for (let i = 0; i < 20; i++) {
     milhos.push(new Milho());
   }
-  startTime = millis();
 }
 
 function draw() {
   // cor de fundo baseada no foco
   if (focused == true) {
-    background("#9400D3");
+    background("#0CC03F");
   } else {
-    background("#0000FF");
+    background("#A6F1AB");
+  }
+
+  if (!jogoComecou) {
+    // Tela inicial com instruções
+    textAlign(CENTER, CENTER);
+    textSize(20);
+    fill(0);
+    text("Use as setas para mover o boi 🐂\nColete os milhos 🌽 e transforme em moedas 🪙\nClique para começar a jogar!", width / 2, height / 2);
+    return; // sai do draw até clicar
   }
 
   // emojis decorativos
@@ -27,6 +36,10 @@ function draw() {
   text("🐂", 10, height - 40);
   text("🌾", 60, height - 40);
   text("🧑‍🌾", 110, height - 40);
+
+  if (startTime === undefined) {
+    startTime = millis();
+  }
 
   if (!gameOver) {
     // tempo restante
@@ -49,9 +62,10 @@ function draw() {
       }
     }
 
-    // placar e tempo, pesquisei no chat gpt para me ajudar com o codigo 
+    // placar e tempo
     fill(0);
     textSize(20);
+    textAlign(LEFT, TOP);
     text("🌽 Comidos: " + score + " 🪙", 10, 30);
     text("⏳ Tempo: " + remaining + "s", 10, 60);
   } else {
@@ -60,6 +74,13 @@ function draw() {
     textAlign(CENTER, CENTER);
     text("Fim de jogo! 🐂💤", width / 2, height / 2 - 20);
     text("Você ganhou " + score + " moedas! 🪙", width / 2, height / 2 + 20);
+  }
+}
+
+function mousePressed() {
+  if (!jogoComecou) {
+    jogoComecou = true;
+    startTime = millis();
   }
 }
 
@@ -120,6 +141,5 @@ class Milho {
     text("🌽", this.x, this.y);
   }
 }
-  
-  
+
   
