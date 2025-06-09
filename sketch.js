@@ -1,7 +1,7 @@
 let boi;
 let milhos = [];
 let score = 0;
-let tempo = 30; // tempo de jogo em segundos 
+let tempo = 20; // tempo de jogo em segundos 
 let gameOver = false;
 let startTime;
 let jogoComecou = false;
